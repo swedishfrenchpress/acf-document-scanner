@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 
 // Notification data pool - document processing notifications
 const notificationPool = [
@@ -583,9 +584,29 @@ function Footer() {
   return (
     <footer className="bg-navy py-16">
       <div className="max-w-4xl mx-auto px-6 text-center">
-        <p className="text-base text-white/50 mb-8 max-w-xl mx-auto">
+        <p className="text-base text-white/50 mb-12 max-w-xl mx-auto">
           AI-powered document intelligence for human rights organizations and investigative journalists.
         </p>
+        
+        {/* Partner Logos */}
+        <div className="bg-white/5 rounded-lg p-8 mb-8">
+          <div className="flex items-center justify-center gap-12">
+            <Image
+              src="/hrf-logo.svg"
+              alt="Human Rights Foundation"
+              width={200}
+              height={80}
+              className="h-16 w-auto"
+            />
+            <Image
+              src="/ai-rights-logo.svg"
+              alt="AI Rights"
+              width={200}
+              height={80}
+              className="h-16 w-auto"
+            />
+          </div>
+        </div>
         
         <div className="border-t border-white/10 pt-8">
           <p className="text-sm text-white/30">
