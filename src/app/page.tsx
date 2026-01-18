@@ -203,8 +203,8 @@ function Hero() {
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
         />
-        {/* Strong dark overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80 z-10" />
+        {/* White gradient overlay for lighter, brighter look */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/60 to-white/40 z-10" />
         {/* Bottom gradient fade to page */}
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent z-20" />
       </div>
@@ -212,19 +212,19 @@ function Hero() {
       {/* Content */}
       <div className="relative z-30 max-w-4xl mx-auto px-6 text-center pt-16">
         {/* Tagline */}
-        <p className="text-teal-light text-sm font-semibold tracking-wider uppercase mb-4 drop-shadow-md">
+        <p className="text-teal text-sm font-semibold tracking-wider uppercase mb-4">
           Document Intelligence Platform
         </p>
 
         {/* Main Headline */}
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] mb-8 drop-shadow-lg">
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-navy leading-[1.1] mb-8">
           Every document.<br />
           Every connection.<br />
           Never forgotten.
         </h1>
 
         {/* Subtitle */}
-        <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto leading-relaxed drop-shadow-md">
+        <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed">
           Upload thousands of documents. Our AI extracts names, companies, and relationships — 
           then links them to everything your organization has ever found.
         </p>
@@ -745,7 +745,7 @@ function ApplicationScreenshots() {
 // Footer
 function Footer() {
   return (
-    <footer className="bg-navy py-16">
+    <footer className="bg-gray-800 py-16">
       <div className="max-w-4xl mx-auto px-6 text-center">
         <p className="text-base text-white/50 mb-12 max-w-xl mx-auto">
           AI-powered document intelligence for human rights organizations and investigative journalists.
