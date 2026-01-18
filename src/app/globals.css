@@ -93,3 +93,145 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--gray-500);
 }
+
+/* Document Stack Animation */
+@keyframes document-float {
+  0%, 100% {
+    transform: translateY(0) rotate(2deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+@keyframes document-stack-1 {
+  0%, 100% {
+    transform: translateY(0) rotate(2deg);
+  }
+  50% {
+    transform: translateY(-4px) rotate(2.5deg);
+  }
+}
+
+@keyframes document-stack-2 {
+  0%, 100% {
+    transform: translateY(0) rotate(1deg);
+  }
+  50% {
+    transform: translateY(-3px) rotate(1.5deg);
+  }
+}
+
+.animate-document-float {
+  animation: document-float 3s ease-in-out infinite;
+}
+
+.animate-document-stack-1 {
+  animation: document-stack-1 3s ease-in-out infinite;
+  animation-delay: 0.1s;
+}
+
+.animate-document-stack-2 {
+  animation: document-stack-2 3s ease-in-out infinite;
+  animation-delay: 0.2s;
+}
+
+/* Connection Graph Animations */
+@keyframes line-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes line-pulse {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes node-pulse {
+  0%, 100% {
+    r: 14;
+    opacity: 0.8;
+  }
+  50% {
+    r: 16;
+    opacity: 1;
+  }
+}
+
+@keyframes center-node-pulse {
+  0%, 100% {
+    r: 18;
+    opacity: 1;
+  }
+  50% {
+    r: 20;
+    opacity: 0.95;
+  }
+}
+
+.animate-line-draw {
+  stroke-dasharray: 100;
+  animation: line-draw 2s ease-out forwards;
+}
+
+.animate-node-pulse {
+  animation: node-pulse 2s ease-in-out infinite;
+}
+
+.animate-center-node-pulse {
+  animation: center-node-pulse 2.5s ease-in-out infinite;
+}
+
+/* Language Card Animations */
+@keyframes language-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes language-link {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+.animate-language-fade-1 {
+  animation: language-fade-in 0.6s ease-out forwards;
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+.animate-language-fade-2 {
+  animation: language-fade-in 0.6s ease-out forwards;
+  animation-delay: 0.4s;
+  opacity: 0;
+}
+
+.animate-language-fade-3 {
+  animation: language-fade-in 0.6s ease-out forwards;
+  animation-delay: 0.6s;
+  opacity: 0;
+}
+
+.animate-language-link {
+  animation: language-link 2s ease-in-out infinite;
+  animation-delay: 1s;
+}

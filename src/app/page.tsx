@@ -300,9 +300,9 @@ function BentoFeatures() {
             {/* Document stack */}
             <div className="flex-1 flex items-center justify-center min-h-[180px] relative">
               <div className="relative">
-                <div className="absolute -bottom-1 -right-1 w-40 h-52 bg-gray-100 rounded-lg transform rotate-2 border border-gray-200"></div>
-                <div className="absolute -bottom-0.5 -right-0.5 w-40 h-52 bg-gray-50 rounded-lg transform rotate-1 border border-gray-200"></div>
-                <div className="relative w-40 h-52 bg-white rounded-lg shadow-sm border border-gray-200 p-4 flex flex-col">
+                <div className="absolute -bottom-1 -right-1 w-40 h-52 bg-gray-100 rounded-lg transform rotate-2 border border-gray-200 animate-document-stack-2"></div>
+                <div className="absolute -bottom-0.5 -right-0.5 w-40 h-52 bg-gray-50 rounded-lg transform rotate-1 border border-gray-200 animate-document-stack-1"></div>
+                <div className="relative w-40 h-52 bg-white rounded-lg shadow-sm border border-gray-200 p-4 flex flex-col animate-document-float">
                   <div className="h-2 w-3/4 bg-navy/20 rounded mb-2"></div>
                   <div className="h-1.5 w-full bg-gray-100 rounded mb-1"></div>
                   <div className="h-1.5 w-full bg-gray-100 rounded mb-1"></div>
@@ -342,26 +342,109 @@ function BentoFeatures() {
             {/* Network graph */}
             <div className="flex-1 relative min-h-[180px] overflow-hidden">
               <svg className="w-full h-full" viewBox="0 0 300 180">
-                <line x1="150" y1="90" x2="60" y2="40" stroke="#0d9488" strokeWidth="1.5" opacity="0.4" />
-                <line x1="150" y1="90" x2="240" y2="40" stroke="#0d9488" strokeWidth="1.5" opacity="0.4" />
-                <line x1="150" y1="90" x2="60" y2="140" stroke="#0d9488" strokeWidth="1.5" opacity="0.4" />
-                <line x1="150" y1="90" x2="240" y2="140" stroke="#0d9488" strokeWidth="1.5" opacity="0.4" />
+                <line 
+                  x1="150" y1="90" x2="60" y2="40" 
+                  stroke="#0d9488" 
+                  strokeWidth="1.5" 
+                  opacity="0"
+                  style={{
+                    animation: 'line-fade-in 1s ease-out forwards',
+                    animationDelay: '0.2s'
+                  }}
+                />
+                <line 
+                  x1="150" y1="90" x2="240" y2="40" 
+                  stroke="#0d9488" 
+                  strokeWidth="1.5" 
+                  opacity="0"
+                  style={{
+                    animation: 'line-fade-in 1s ease-out forwards',
+                    animationDelay: '0.4s'
+                  }}
+                />
+                <line 
+                  x1="150" y1="90" x2="60" y2="140" 
+                  stroke="#0d9488" 
+                  strokeWidth="1.5" 
+                  opacity="0"
+                  style={{
+                    animation: 'line-fade-in 1s ease-out forwards',
+                    animationDelay: '0.6s'
+                  }}
+                />
+                <line 
+                  x1="150" y1="90" x2="240" y2="140" 
+                  stroke="#0d9488" 
+                  strokeWidth="1.5" 
+                  opacity="0"
+                  style={{
+                    animation: 'line-fade-in 1s ease-out forwards',
+                    animationDelay: '0.8s'
+                  }}
+                />
                 <line x1="60" y1="40" x2="60" y2="140" stroke="#e2e8f0" strokeWidth="1" strokeDasharray="4 4" />
                 <line x1="240" y1="40" x2="240" y2="140" stroke="#e2e8f0" strokeWidth="1" strokeDasharray="4 4" />
                 
-                <circle cx="150" cy="90" r="18" fill="#1a1a2e" />
+                <circle 
+                  cx="150" cy="90" 
+                  r="18" 
+                  fill="#1a1a2e"
+                  style={{
+                    animation: 'center-node-pulse 2.5s ease-in-out infinite'
+                  }}
+                />
                 <text x="150" y="94" textAnchor="middle" fill="white" fontSize="8" fontWeight="500">OFFICIAL</text>
                 
-                <circle cx="60" cy="40" r="14" fill="#ccfbf1" stroke="#0d9488" strokeWidth="1" />
+                <circle 
+                  cx="60" cy="40" 
+                  r="14" 
+                  fill="#ccfbf1" 
+                  stroke="#0d9488" 
+                  strokeWidth="1"
+                  style={{
+                    animation: 'node-pulse 2s ease-in-out infinite',
+                    animationDelay: '0.3s'
+                  }}
+                />
                 <text x="60" y="44" textAnchor="middle" fill="#1a1a2e" fontSize="7" fontWeight="500">BVI Co.</text>
                 
-                <circle cx="240" cy="40" r="14" fill="#ccfbf1" stroke="#0d9488" strokeWidth="1" />
+                <circle 
+                  cx="240" cy="40" 
+                  r="14" 
+                  fill="#ccfbf1" 
+                  stroke="#0d9488" 
+                  strokeWidth="1"
+                  style={{
+                    animation: 'node-pulse 2s ease-in-out infinite',
+                    animationDelay: '0.5s'
+                  }}
+                />
                 <text x="240" y="44" textAnchor="middle" fill="#1a1a2e" fontSize="7" fontWeight="500">YACHT</text>
                 
-                <circle cx="60" cy="140" r="14" fill="#ccfbf1" stroke="#0d9488" strokeWidth="1" />
+                <circle 
+                  cx="60" cy="140" 
+                  r="14" 
+                  fill="#ccfbf1" 
+                  stroke="#0d9488" 
+                  strokeWidth="1"
+                  style={{
+                    animation: 'node-pulse 2s ease-in-out infinite',
+                    animationDelay: '0.7s'
+                  }}
+                />
                 <text x="60" y="144" textAnchor="middle" fill="#1a1a2e" fontSize="7" fontWeight="500">TRUST</text>
                 
-                <circle cx="240" cy="140" r="14" fill="#ccfbf1" stroke="#0d9488" strokeWidth="1" />
+                <circle 
+                  cx="240" cy="140" 
+                  r="14" 
+                  fill="#ccfbf1" 
+                  stroke="#0d9488" 
+                  strokeWidth="1"
+                  style={{
+                    animation: 'node-pulse 2s ease-in-out infinite',
+                    animationDelay: '0.9s'
+                  }}
+                />
                 <text x="240" y="144" textAnchor="middle" fill="#1a1a2e" fontSize="7" fontWeight="500">NOMINEE</text>
               </svg>
             </div>
@@ -388,17 +471,17 @@ function BentoFeatures() {
             
             {/* Language cards */}
             <div className="flex-1 flex items-center justify-center gap-3">
-              <div className="bg-gray-50 rounded-lg p-3 border border-gray-100">
+              <div className="bg-gray-50 rounded-lg p-3 border border-gray-100 animate-language-fade-1">
                 <p className="text-lg font-semibold text-navy mb-0.5">Волков</p>
                 <p className="text-[10px] text-gray-400">Russian</p>
               </div>
-              <span className="text-gray-300">=</span>
-              <div className="bg-gray-50 rounded-lg p-3 border border-gray-100">
+              <span className="text-gray-300 animate-language-link">=</span>
+              <div className="bg-gray-50 rounded-lg p-3 border border-gray-100 animate-language-fade-2">
                 <p className="text-lg font-semibold text-navy mb-0.5">Volkov</p>
                 <p className="text-[10px] text-gray-400">English</p>
               </div>
-              <span className="text-gray-300">=</span>
-              <div className="bg-gray-50 rounded-lg p-3 border border-gray-100">
+              <span className="text-gray-300 animate-language-link" style={{ animationDelay: '1.2s' }}>=</span>
+              <div className="bg-gray-50 rounded-lg p-3 border border-gray-100 animate-language-fade-3">
                 <p className="text-lg font-semibold text-navy mb-0.5">Volkoff</p>
                 <p className="text-[10px] text-gray-400">French</p>
               </div>
