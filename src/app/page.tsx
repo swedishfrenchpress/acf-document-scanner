@@ -297,17 +297,25 @@ function BentoFeatures() {
               Our AI extracts every name, company, address, and amount automatically.
             </p>
             
-            {/* Document scanning UI */}
-            <div className="flex-1 flex items-center justify-center min-h-[180px] relative overflow-hidden rounded-lg">
-              <div className="relative w-full h-full">
-                <Image
-                  src="/doc-scan.jpg"
-                  alt="Document scanning interface"
-                  fill
-                  className="object-cover rounded-lg"
-                />
-                {/* Gradient fade overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent pointer-events-none"></div>
+            {/* Document stack */}
+            <div className="flex-1 flex items-center justify-center min-h-[180px] relative">
+              <div className="relative">
+                <div className="absolute -bottom-1 -right-1 w-40 h-52 bg-gray-100 rounded-lg transform rotate-2 border border-gray-200 animate-document-stack-2"></div>
+                <div className="absolute -bottom-0.5 -right-0.5 w-40 h-52 bg-gray-50 rounded-lg transform rotate-1 border border-gray-200 animate-document-stack-1"></div>
+                <div className="relative w-40 h-52 bg-white rounded-lg shadow-sm border border-gray-200 p-4 flex flex-col animate-document-float">
+                  <div className="h-2 w-3/4 bg-navy/20 rounded mb-2"></div>
+                  <div className="h-1.5 w-full bg-gray-100 rounded mb-1"></div>
+                  <div className="h-1.5 w-full bg-gray-100 rounded mb-1"></div>
+                  <div className="h-1.5 w-2/3 bg-gray-100 rounded mb-3"></div>
+                  <div className="h-1.5 w-1/2 bg-teal-soft rounded mb-1"></div>
+                  <div className="h-1.5 w-full bg-gray-100 rounded mb-1"></div>
+                  <div className="h-1.5 w-3/4 bg-teal-soft rounded mb-1"></div>
+                  <div className="flex-1"></div>
+                  <div className="flex gap-2">
+                    <div className="h-4 w-12 bg-gray-100 rounded text-[8px] flex items-center justify-center text-gray-500">PDF</div>
+                    <div className="h-4 w-14 bg-teal-soft rounded text-[8px] flex items-center justify-center text-teal">SCANNED</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -331,18 +339,114 @@ function BentoFeatures() {
               The yacht you&apos;re investigating today gets linked to the shell company a colleague traced three years ago.
             </p>
             
-            {/* Connection map visualization */}
-            <div className="flex-1 flex items-center justify-center min-h-[180px] relative overflow-hidden rounded-lg">
-              <div className="relative w-full h-full">
-                <Image
-                  src="/map-linking.jpg"
-                  alt="Connection map showing entity relationships"
-                  fill
-                  className="object-cover rounded-lg"
+            {/* Network graph */}
+            <div className="flex-1 relative min-h-[180px] overflow-hidden">
+              <svg className="w-full h-full" viewBox="0 0 300 180">
+                <line 
+                  x1="150" y1="90" x2="60" y2="40" 
+                  stroke="#0d9488" 
+                  strokeWidth="1.5" 
+                  opacity="0"
+                  style={{
+                    animation: 'line-fade-in 1s ease-out forwards',
+                    animationDelay: '0.2s'
+                  }}
                 />
-                {/* Gradient fade overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent pointer-events-none"></div>
-              </div>
+                <line 
+                  x1="150" y1="90" x2="240" y2="40" 
+                  stroke="#0d9488" 
+                  strokeWidth="1.5" 
+                  opacity="0"
+                  style={{
+                    animation: 'line-fade-in 1s ease-out forwards',
+                    animationDelay: '0.4s'
+                  }}
+                />
+                <line 
+                  x1="150" y1="90" x2="60" y2="140" 
+                  stroke="#0d9488" 
+                  strokeWidth="1.5" 
+                  opacity="0"
+                  style={{
+                    animation: 'line-fade-in 1s ease-out forwards',
+                    animationDelay: '0.6s'
+                  }}
+                />
+                <line 
+                  x1="150" y1="90" x2="240" y2="140" 
+                  stroke="#0d9488" 
+                  strokeWidth="1.5" 
+                  opacity="0"
+                  style={{
+                    animation: 'line-fade-in 1s ease-out forwards',
+                    animationDelay: '0.8s'
+                  }}
+                />
+                <line x1="60" y1="40" x2="60" y2="140" stroke="#e2e8f0" strokeWidth="1" strokeDasharray="4 4" />
+                <line x1="240" y1="40" x2="240" y2="140" stroke="#e2e8f0" strokeWidth="1" strokeDasharray="4 4" />
+                
+                <circle 
+                  cx="150" cy="90" 
+                  r="18" 
+                  fill="#1a1a2e"
+                  style={{
+                    animation: 'center-node-pulse 2.5s ease-in-out infinite'
+                  }}
+                />
+                <text x="150" y="94" textAnchor="middle" fill="white" fontSize="8" fontWeight="500">OFFICIAL</text>
+                
+                <circle 
+                  cx="60" cy="40" 
+                  r="14" 
+                  fill="#ccfbf1" 
+                  stroke="#0d9488" 
+                  strokeWidth="1"
+                  style={{
+                    animation: 'node-pulse 2s ease-in-out infinite',
+                    animationDelay: '0.3s'
+                  }}
+                />
+                <text x="60" y="44" textAnchor="middle" fill="#1a1a2e" fontSize="7" fontWeight="500">BVI Co.</text>
+                
+                <circle 
+                  cx="240" cy="40" 
+                  r="14" 
+                  fill="#ccfbf1" 
+                  stroke="#0d9488" 
+                  strokeWidth="1"
+                  style={{
+                    animation: 'node-pulse 2s ease-in-out infinite',
+                    animationDelay: '0.5s'
+                  }}
+                />
+                <text x="240" y="44" textAnchor="middle" fill="#1a1a2e" fontSize="7" fontWeight="500">YACHT</text>
+                
+                <circle 
+                  cx="60" cy="140" 
+                  r="14" 
+                  fill="#ccfbf1" 
+                  stroke="#0d9488" 
+                  strokeWidth="1"
+                  style={{
+                    animation: 'node-pulse 2s ease-in-out infinite',
+                    animationDelay: '0.7s'
+                  }}
+                />
+                <text x="60" y="144" textAnchor="middle" fill="#1a1a2e" fontSize="7" fontWeight="500">TRUST</text>
+                
+                <circle 
+                  cx="240" cy="140" 
+                  r="14" 
+                  fill="#ccfbf1" 
+                  stroke="#0d9488" 
+                  strokeWidth="1"
+                  style={{
+                    animation: 'node-pulse 2s ease-in-out infinite',
+                    animationDelay: '0.9s'
+                  }}
+                />
+                <text x="240" y="144" textAnchor="middle" fill="#1a1a2e" fontSize="7" fontWeight="500">NOMINEE</text>
+              </svg>
             </div>
           </div>
 
