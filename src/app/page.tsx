@@ -224,10 +224,20 @@ function Hero() {
         </h1>
 
         {/* Subtitle */}
-        <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed mb-8">
           Upload thousands of documents. Our AI extracts names, companies, and relationships — 
           then links them to everything your organization has ever found.
         </p>
+
+        {/* CTA Button */}
+        <a
+          href="https://corruption-disrespector-demo.replit.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center px-8 py-4 bg-teal text-white text-base font-semibold rounded-lg hover:bg-teal-light transition-all shadow-sm"
+        >
+          View Demo
+        </a>
       </div>
     </section>
   );
