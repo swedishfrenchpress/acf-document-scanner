@@ -1,12 +1,20 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Playfair_Display, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 
-// Inter - clean professional font
-const inter = Inter({
-  variable: "--font-inter",
+// Distinctive serif display font for headlines - editorial/journalistic feel
+const playfair = Playfair_Display({
+  variable: "--font-display",
   subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  style: ["normal", "italic"],
+});
+
+// Refined sans-serif for body text
+const sourceSans = Source_Sans_3({
+  variable: "--font-body",
+  subsets: ["latin", "cyrillic"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -36,7 +44,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} antialiased`}>
+      <body className={`${playfair.variable} ${sourceSans.variable} antialiased`}>
         {children}
       </body>
     </html>

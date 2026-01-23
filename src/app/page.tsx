@@ -120,11 +120,11 @@ function EntityDiscoveryBento() {
   };
 
   return (
-    <div ref={containerRef} className="bg-teal-pale rounded-lg p-6 flex-1 min-h-[320px] flex flex-col relative overflow-hidden border border-gray-200">
-      <h3 className="text-2xl font-semibold text-navy mb-2 text-center">
+    <div ref={containerRef} className="bg-teal-pale rounded-sm p-10 flex-1 min-h-[320px] flex flex-col relative overflow-hidden border border-gray-200 card-hover editorial-accent">
+      <h3 className="text-2xl font-bold text-charcoal mb-3 text-center tracking-tight">
         Real-time Entity Extraction
       </h3>
-      <p className="text-base text-gray-500 mb-2 text-center">
+      <p className="text-base text-gray-700 mb-6 text-center font-light leading-relaxed">
         Upload a document. Watch as names, companies, addresses, and amounts are automatically identified.
       </p>
       
@@ -133,36 +133,26 @@ function EntityDiscoveryBento() {
           {notifications.map((notification) => (
             <div
               key={notification.id}
-              className="absolute top-1/2 left-0 right-0 flex rounded-lg shadow-md ring-1 ring-black/5 items-center p-4 gap-4 pointer-events-none select-none bg-white"
+              className="absolute top-1/2 left-0 right-0 flex rounded-sm items-center p-6 gap-4 pointer-events-none select-none bg-bg-paper border border-gray-200"
               style={{
                 ...getStackStyles(notification.position),
-                transition: "all 0.7s cubic-bezier(0.4, 0, 0.2, 1)",
+                transition: "all 0.8s cubic-bezier(0.16, 1, 0.3, 1)",
               }}
             >
-              <div className="w-12 h-12 rounded-lg bg-teal-soft flex items-center justify-center flex-shrink-0">
+              <div className="w-12 h-12 rounded-sm bg-teal-soft flex items-center justify-center flex-shrink-0 border border-teal/20">
                 <svg className="w-6 h-6 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-base font-semibold text-navy">{notification.type}</p>
-                <p className="text-sm text-gray-500 truncate">{notification.entity}</p>
+                <p className="text-base font-semibold text-charcoal">{notification.type}</p>
+                <p className="text-sm text-gray-600 truncate font-light">{notification.entity}</p>
               </div>
             </div>
           ))}
         </div>
       </div>
     </div>
-  );
-}
-
-// ACF Logo Component
-function ACFLogo({ className = "text-3xl", light = false }: { className?: string; light?: boolean }) {
-  return (
-    <span className={`font-bold tracking-tight ${className}`}>
-      <span className={light ? "text-white" : "text-navy"}>acf</span>
-      <span className="text-coral">.</span>
-    </span>
   );
 }
 
@@ -177,12 +167,12 @@ function Navigation() {
   }, []);
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
       isScrolled 
-        ? "bg-white/90 backdrop-blur-md shadow-sm" 
+        ? "bg-bg-paper/90 backdrop-blur-xl border-b border-gray-200/50" 
         : ""
     }`}>
-      <div className="max-w-7xl mx-auto px-6 py-4">
+      <div className="max-w-7xl mx-auto px-8 py-6">
         {/* Empty nav - logo removed */}
       </div>
     </nav>
@@ -192,7 +182,7 @@ function Navigation() {
 // Hero Section with Video Background
 function Hero() {
   return (
-    <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden grain-overlay">
       {/* Video Background */}
       <div className="absolute inset-0 z-0">
         <video
@@ -203,41 +193,49 @@ function Hero() {
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
         />
-        {/* White gradient overlay for lighter, brighter look */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/60 to-white/40 z-10" />
+        {/* Editorial gradient overlay - warmer, more atmospheric */}
+        <div className="absolute inset-0 bg-gradient-to-b from-bg-cream/85 via-bg-cream/70 to-bg-cream/90 z-10" />
         {/* Bottom gradient fade to page */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent z-20" />
+        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-bg-cream to-transparent z-20" />
       </div>
 
-      {/* Content */}
-      <div className="relative z-30 max-w-4xl mx-auto px-6 text-center pt-16">
-        {/* Tagline */}
-        <p className="text-teal text-sm font-semibold tracking-wider uppercase mb-4">
-          Document Intelligence Platform
-        </p>
+      {/* Content - Editorial layout */}
+      <div className="relative z-30 max-w-6xl mx-auto px-8 pt-24 pb-32">
+        <div className="grid md:grid-cols-12 gap-8">
+          {/* Main content */}
+          <div className="md:col-span-12">
+            {/* Tagline with editorial accent */}
+            <div className="flex items-center gap-4 mb-6">
+              <div className="h-px w-12 bg-teal"></div>
+              <p className="text-teal text-xs font-semibold tracking-[0.2em] uppercase">
+                Document Intelligence Platform
+              </p>
+            </div>
 
-        {/* Main Headline */}
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-navy leading-[1.1] mb-8">
-          Every document.<br />
-          Every connection.<br />
-          Never forgotten.
-        </h1>
+            {/* Main Headline - Editorial serif */}
+            <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-charcoal leading-[1.05] mb-8 tracking-tight">
+              Every document.<br />
+              Every connection.<br />
+              <span className="italic">Never forgotten.</span>
+            </h1>
 
-        {/* Subtitle */}
-        <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed mb-8">
-          Upload thousands of documents. Our AI extracts names, companies, and relationships — 
-          then links them to everything your organization has ever found.
-        </p>
+            {/* Subtitle - refined body font */}
+            <p className="text-lg md:text-xl lg:text-2xl text-gray-700 max-w-2xl leading-relaxed mb-10 font-light">
+              Upload thousands of documents. Our AI extracts names, companies, and relationships — 
+              then links them to everything your organization has ever found.
+            </p>
 
-        {/* CTA Button */}
-        <a
-          href="https://corruption-disrespector-demo.replit.app/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center justify-center px-8 py-4 bg-teal text-white text-base font-semibold rounded-lg hover:bg-teal-light transition-all shadow-sm"
-        >
-          View Demo
-        </a>
+            {/* CTA Button - editorial style */}
+            <a
+              href="https://corruption-disrespector-demo.replit.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary inline-flex items-center justify-center px-10 py-4 bg-charcoal text-white text-base font-semibold rounded-sm hover:bg-charcoal-light transition-all"
+            >
+              View Demo
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -246,24 +244,47 @@ function Hero() {
 // Problem Statement Section
 function ProblemStatement() {
   return (
-    <section className="bg-white py-20 px-4 border-t border-gray-100">
-      <div className="max-w-3xl mx-auto text-center">
-        <p className="text-xs font-semibold text-teal tracking-wider uppercase mb-4">The Problem</p>
-        <h2 className="text-3xl md:text-4xl font-bold text-navy leading-tight mb-8">
-          Corruption hides in complexity
-        </h2>
-        <p className="text-lg text-gray-500 leading-relaxed mb-6">
-          A government official doesn&apos;t put a yacht in his own name — he puts it in a BVI shell company, 
-          owned by a Cyprus holding company, managed by a Swiss trustee, with his son&apos;s former classmate as the nominee director.
-        </p>
-        <p className="text-lg text-gray-500 leading-relaxed mb-10">
-          The evidence exists — scattered across corporate registries, property databases, procurement records, 
-          and court filings in a dozen countries. The connections are there, buried in thousands of documents.
-        </p>
-        <div className="bg-gray-50 rounded-lg p-6 border border-gray-100">
-          <p className="text-xl text-navy font-medium">
-            &ldquo;The corruption networks are interconnected.<br/>The research is not.&rdquo;
-          </p>
+    <section className="bg-bg-paper py-40 px-8 relative overflow-hidden">
+      {/* Decorative background elements */}
+      <div className="absolute top-0 left-0 w-96 h-96 bg-teal/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-amber/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+      
+      <div className="max-w-5xl mx-auto relative z-10">
+        {/* Asymmetric layout */}
+        <div className="grid md:grid-cols-12 gap-12 items-start">
+          {/* Left column - label */}
+          <div className="md:col-span-3">
+            <div className="sticky top-24">
+              <div className="h-px w-16 bg-teal mb-4"></div>
+              <p className="text-xs font-semibold text-teal tracking-[0.2em] uppercase">The Problem</p>
+            </div>
+          </div>
+
+          {/* Right column - content */}
+          <div className="md:col-span-9">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-charcoal leading-[1.1] mb-10 tracking-tight">
+              Corruption hides in complexity
+            </h2>
+            
+            <div className="space-y-8 mb-12">
+              <p className="text-xl text-gray-700 leading-relaxed font-light">
+                A government official doesn&apos;t put a yacht in his own name — he puts it in a BVI shell company, 
+                owned by a Cyprus holding company, managed by a Swiss trustee, with his son&apos;s former classmate as the nominee director.
+              </p>
+              <p className="text-xl text-gray-700 leading-relaxed font-light">
+                The evidence exists — scattered across corporate registries, property databases, procurement records, 
+                and court filings in a dozen countries. The connections are there, buried in thousands of documents.
+              </p>
+            </div>
+
+            {/* Editorial quote block */}
+            <div className="bg-bg-cream border-l-4 border-teal pl-8 py-8 pr-12 relative">
+              <div className="absolute top-0 left-0 text-6xl text-teal/10 font-display leading-none">&ldquo;</div>
+              <p className="text-2xl text-charcoal font-medium leading-relaxed relative z-10 italic">
+                The corruption networks are interconnected.<br/>The research is not.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -273,57 +294,67 @@ function ProblemStatement() {
 // Bento Box Feature Section
 function BentoFeatures() {
   return (
-    <section id="features" className="bg-bg-light py-20 px-4">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
-          <p className="text-xs font-semibold text-teal tracking-wider uppercase mb-4">The Solution</p>
-          <h2 className="text-3xl md:text-4xl font-bold text-navy leading-tight mb-4">
+    <section id="features" className="bg-bg-cream py-40 px-8 relative">
+      {/* Atmospheric background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-teal/5 to-transparent"></div>
+      
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Editorial header */}
+        <div className="mb-24">
+          <div className="flex items-center gap-4 mb-6">
+            <div className="h-px w-16 bg-teal"></div>
+            <p className="text-xs font-semibold text-teal tracking-[0.2em] uppercase">The Solution</p>
+          </div>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-charcoal leading-[1.1] mb-6 tracking-tight max-w-4xl">
             One system for all your research
           </h2>
-          <p className="text-lg text-gray-500 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-700 max-w-3xl font-light leading-relaxed">
             Every document, every entity, and every connection — searchable, linkable, and persistent.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           
           {/* Document Upload & Analysis */}
-          <div className="bg-white rounded-lg p-6 flex flex-col border border-gray-200">
-            <div className="flex items-start justify-between mb-4">
+          <div className="bg-bg-paper rounded-sm p-10 flex flex-col border border-gray-200 card-hover relative overflow-hidden editorial-accent">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-teal/5 rounded-full blur-2xl"></div>
+            <div className="flex items-start justify-between mb-6 relative z-10">
               <div>
-                <p className="text-xs font-semibold text-teal tracking-wider uppercase mb-2">Upload & Analyze</p>
-                <h3 className="text-2xl font-semibold text-navy">
+                <p className="text-xs font-semibold text-teal tracking-[0.2em] uppercase mb-4">Upload & Analyze</p>
+                <h3 className="text-3xl font-bold text-charcoal tracking-tight leading-tight">
                   Drop any document
                 </h3>
               </div>
-              <div className="w-10 h-10 rounded-lg bg-teal-soft flex items-center justify-center">
-                <svg className="w-5 h-5 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-14 h-14 rounded-sm bg-teal-soft flex items-center justify-center border border-teal/20">
+                <svg className="w-7 h-7 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                 </svg>
               </div>
             </div>
-            <p className="text-base text-gray-500 mb-6">
+            <p className="text-lg text-gray-700 mb-8 leading-relaxed font-light relative z-10">
               PDFs, court filings, corporate registrations, financial records. 
               Our AI extracts every name, company, address, and amount automatically.
             </p>
             
-            {/* Document stack */}
+            {/* Document stack with scanning effect */}
             <div className="flex-1 flex items-center justify-center min-h-[180px] relative">
               <div className="relative">
-                <div className="absolute -bottom-1 -right-1 w-40 h-52 bg-gray-100 rounded-lg transform rotate-2 border border-gray-200 animate-document-stack-2"></div>
-                <div className="absolute -bottom-0.5 -right-0.5 w-40 h-52 bg-gray-50 rounded-lg transform rotate-1 border border-gray-200 animate-document-stack-1"></div>
-                <div className="relative w-40 h-52 bg-white rounded-lg shadow-sm border border-gray-200 p-4 flex flex-col animate-document-float">
-                  <div className="h-2 w-3/4 bg-navy/20 rounded mb-2"></div>
-                  <div className="h-1.5 w-full bg-gray-100 rounded mb-1"></div>
-                  <div className="h-1.5 w-full bg-gray-100 rounded mb-1"></div>
-                  <div className="h-1.5 w-2/3 bg-gray-100 rounded mb-3"></div>
-                  <div className="h-1.5 w-1/2 bg-teal-soft rounded mb-1"></div>
-                  <div className="h-1.5 w-full bg-gray-100 rounded mb-1"></div>
-                  <div className="h-1.5 w-3/4 bg-teal-soft rounded mb-1"></div>
+                <div className="absolute -bottom-1 -right-1 w-40 h-52 bg-gray-100 rounded-sm transform rotate-2 border border-gray-200 animate-document-stack-2"></div>
+                <div className="absolute -bottom-0.5 -right-0.5 w-40 h-52 bg-gray-50 rounded-sm transform rotate-1 border border-gray-200 animate-document-stack-1"></div>
+                <div className="relative w-40 h-52 bg-bg-paper rounded-sm border border-gray-200 p-4 flex flex-col animate-document-float overflow-hidden">
+                  {/* Scanning line */}
+                  <div className="absolute left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-teal to-transparent animate-scan-line"></div>
+                  <div className="h-2 w-3/4 bg-charcoal/20 rounded-sm mb-2"></div>
+                  <div className="h-1.5 w-full bg-gray-100 rounded-sm mb-1"></div>
+                  <div className="h-1.5 w-full bg-gray-100 rounded-sm mb-1"></div>
+                  <div className="h-1.5 w-2/3 bg-gray-100 rounded-sm mb-3"></div>
+                  <div className="h-1.5 w-1/2 bg-teal-soft rounded-sm mb-1"></div>
+                  <div className="h-1.5 w-full bg-gray-100 rounded-sm mb-1"></div>
+                  <div className="h-1.5 w-3/4 bg-teal-soft rounded-sm mb-1"></div>
                   <div className="flex-1"></div>
                   <div className="flex gap-2">
-                    <div className="h-4 w-12 bg-gray-100 rounded text-[8px] flex items-center justify-center text-gray-500">PDF</div>
-                    <div className="h-4 w-14 bg-teal-soft rounded text-[8px] flex items-center justify-center text-teal">SCANNED</div>
+                    <div className="h-4 w-12 bg-gray-100 rounded-sm text-[8px] flex items-center justify-center text-gray-600 font-medium">PDF</div>
+                    <div className="h-4 w-14 bg-teal-soft rounded-sm text-[8px] flex items-center justify-center text-teal font-medium">SCANNED</div>
                   </div>
                 </div>
               </div>
@@ -331,169 +362,190 @@ function BentoFeatures() {
           </div>
 
           {/* Connection Mapping */}
-          <div className="bg-white rounded-lg p-6 flex flex-col border border-gray-200">
-            <div className="flex items-start justify-between mb-4">
+          <div className="bg-bg-paper rounded-sm p-10 flex flex-col border border-gray-200 card-hover relative overflow-hidden editorial-accent">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-amber/5 rounded-full blur-2xl"></div>
+            <div className="flex items-start justify-between mb-6 relative z-10">
               <div>
-                <p className="text-xs font-semibold text-teal tracking-wider uppercase mb-2">Connection Mapping</p>
-                <h3 className="text-2xl font-semibold text-navy">
+                <p className="text-xs font-semibold text-teal tracking-[0.2em] uppercase mb-4">Connection Mapping</p>
+                <h3 className="text-3xl font-bold text-charcoal tracking-tight leading-tight">
                   Visualize networks
                 </h3>
               </div>
-              <div className="w-10 h-10 rounded-lg bg-teal-soft flex items-center justify-center">
-                <svg className="w-5 h-5 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-14 h-14 rounded-sm bg-teal-soft flex items-center justify-center border border-teal/20">
+                <svg className="w-7 h-7 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                 </svg>
               </div>
             </div>
-            <p className="text-base text-gray-500 mb-6">
+            <p className="text-lg text-gray-700 mb-8 leading-relaxed font-light relative z-10">
               The yacht you&apos;re investigating today gets linked to the shell company a colleague traced three years ago.
             </p>
             
-            {/* Network graph */}
-            <div className="flex-1 relative min-h-[180px] overflow-hidden">
-              <svg className="w-full h-full" viewBox="0 0 300 180">
+            {/* Network graph - elegant version with labels outside nodes */}
+            <div className="flex-1 relative min-h-[200px] overflow-hidden">
+              <svg className="w-full h-full" viewBox="0 0 340 200">
+                {/* Connection lines - drawn first so nodes appear on top */}
                 <line 
-                  x1="150" y1="90" x2="60" y2="40" 
+                  x1="170" y1="100" x2="50" y2="45" 
                   stroke="#0d9488" 
                   strokeWidth="1.5" 
                   opacity="0"
                   style={{
                     animation: 'line-fade-in 1s ease-out forwards',
-                    animationDelay: '0.2s'
+                    animationDelay: '0.3s'
                   }}
                 />
                 <line 
-                  x1="150" y1="90" x2="240" y2="40" 
+                  x1="170" y1="100" x2="290" y2="45" 
                   stroke="#0d9488" 
                   strokeWidth="1.5" 
                   opacity="0"
                   style={{
                     animation: 'line-fade-in 1s ease-out forwards',
+                    animationDelay: '0.5s'
+                  }}
+                />
+                <line 
+                  x1="170" y1="100" x2="50" y2="155" 
+                  stroke="#0d9488" 
+                  strokeWidth="1.5" 
+                  opacity="0"
+                  style={{
+                    animation: 'line-fade-in 1s ease-out forwards',
+                    animationDelay: '0.7s'
+                  }}
+                />
+                <line 
+                  x1="170" y1="100" x2="290" y2="155" 
+                  stroke="#0d9488" 
+                  strokeWidth="1.5" 
+                  opacity="0"
+                  style={{
+                    animation: 'line-fade-in 1s ease-out forwards',
+                    animationDelay: '0.9s'
+                  }}
+                />
+                {/* Secondary connections */}
+                <line x1="50" y1="45" x2="50" y2="155" stroke="#e5e5e5" strokeWidth="1" strokeDasharray="3 3" />
+                <line x1="290" y1="45" x2="290" y2="155" stroke="#e5e5e5" strokeWidth="1" strokeDasharray="3 3" />
+                
+                {/* Center node - Official with pulse rings */}
+                <circle 
+                  cx="170" cy="100" 
+                  r="28" 
+                  fill="none"
+                  stroke="#dc2626"
+                  strokeWidth="1"
+                  opacity="0"
+                  style={{
+                    animation: 'pulse-ring 2.5s ease-out infinite'
+                  }}
+                />
+                <circle 
+                  cx="170" cy="100" 
+                  r="20" 
+                  fill="none"
+                  stroke="#dc2626"
+                  strokeWidth="1"
+                  opacity="0"
+                  style={{
+                    animation: 'pulse-ring 2.5s ease-out infinite',
                     animationDelay: '0.4s'
                   }}
                 />
-                <line 
-                  x1="150" y1="90" x2="60" y2="140" 
-                  stroke="#0d9488" 
-                  strokeWidth="1.5" 
-                  opacity="0"
-                  style={{
-                    animation: 'line-fade-in 1s ease-out forwards',
-                    animationDelay: '0.6s'
-                  }}
-                />
-                <line 
-                  x1="150" y1="90" x2="240" y2="140" 
-                  stroke="#0d9488" 
-                  strokeWidth="1.5" 
-                  opacity="0"
-                  style={{
-                    animation: 'line-fade-in 1s ease-out forwards',
-                    animationDelay: '0.8s'
-                  }}
-                />
-                <line x1="60" y1="40" x2="60" y2="140" stroke="#e2e8f0" strokeWidth="1" strokeDasharray="4 4" />
-                <line x1="240" y1="40" x2="240" y2="140" stroke="#e2e8f0" strokeWidth="1" strokeDasharray="4 4" />
-                
                 <circle 
-                  cx="150" cy="90" 
-                  r="18" 
-                  fill="#1a1a2e"
-                  style={{
-                    animation: 'center-node-pulse 2.5s ease-in-out infinite'
-                  }}
+                  cx="170" cy="100" 
+                  r="12" 
+                  fill="#dc2626"
                 />
-                <text x="150" y="94" textAnchor="middle" fill="white" fontSize="8" fontWeight="500">OFFICIAL</text>
+                <text x="170" y="138" textAnchor="middle" fill="#dc2626" fontSize="10" fontWeight="700" letterSpacing="0.08em">OFFICIAL</text>
                 
+                {/* Top left node - BVI Corp */}
                 <circle 
-                  cx="60" cy="40" 
-                  r="14" 
-                  fill="#ccfbf1" 
-                  stroke="#0d9488" 
-                  strokeWidth="1"
+                  cx="50" cy="45" 
+                  r="8" 
+                  fill="#0d9488"
                   style={{
                     animation: 'node-pulse 2s ease-in-out infinite',
                     animationDelay: '0.3s'
                   }}
                 />
-                <text x="60" y="44" textAnchor="middle" fill="#1a1a2e" fontSize="7" fontWeight="500">BVI Co.</text>
+                <text x="50" y="28" textAnchor="middle" fill="#525252" fontSize="9" fontWeight="500">BVI Corp</text>
                 
+                {/* Top right node - Yacht */}
                 <circle 
-                  cx="240" cy="40" 
-                  r="14" 
-                  fill="#ccfbf1" 
-                  stroke="#0d9488" 
-                  strokeWidth="1"
+                  cx="290" cy="45" 
+                  r="8" 
+                  fill="#0d9488"
                   style={{
                     animation: 'node-pulse 2s ease-in-out infinite',
                     animationDelay: '0.5s'
                   }}
                 />
-                <text x="240" y="44" textAnchor="middle" fill="#1a1a2e" fontSize="7" fontWeight="500">YACHT</text>
+                <text x="290" y="28" textAnchor="middle" fill="#525252" fontSize="9" fontWeight="500">Yacht</text>
                 
+                {/* Bottom left node - Swiss Trust */}
                 <circle 
-                  cx="60" cy="140" 
-                  r="14" 
-                  fill="#ccfbf1" 
-                  stroke="#0d9488" 
-                  strokeWidth="1"
+                  cx="50" cy="155" 
+                  r="8" 
+                  fill="#0d9488"
                   style={{
                     animation: 'node-pulse 2s ease-in-out infinite',
                     animationDelay: '0.7s'
                   }}
                 />
-                <text x="60" y="144" textAnchor="middle" fill="#1a1a2e" fontSize="7" fontWeight="500">TRUST</text>
+                <text x="50" y="178" textAnchor="middle" fill="#525252" fontSize="9" fontWeight="500">Swiss Trust</text>
                 
+                {/* Bottom right node - Nominee */}
                 <circle 
-                  cx="240" cy="140" 
-                  r="14" 
-                  fill="#ccfbf1" 
-                  stroke="#0d9488" 
-                  strokeWidth="1"
+                  cx="290" cy="155" 
+                  r="8" 
+                  fill="#0d9488"
                   style={{
                     animation: 'node-pulse 2s ease-in-out infinite',
                     animationDelay: '0.9s'
                   }}
                 />
-                <text x="240" y="144" textAnchor="middle" fill="#1a1a2e" fontSize="7" fontWeight="500">NOMINEE</text>
+                <text x="290" y="178" textAnchor="middle" fill="#525252" fontSize="9" fontWeight="500">Nominee</text>
               </svg>
             </div>
           </div>
 
           {/* Multi-language Support */}
-          <div className="bg-white rounded-lg p-6 flex flex-col border border-gray-200">
-            <div className="flex items-start justify-between mb-4">
+          <div className="bg-bg-paper rounded-sm p-10 flex flex-col border border-gray-200 card-hover relative overflow-hidden editorial-accent">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-teal/5 rounded-full blur-2xl"></div>
+            <div className="flex items-start justify-between mb-6 relative z-10">
               <div>
-                <p className="text-xs font-semibold text-teal tracking-wider uppercase mb-2">Multi-language</p>
-                <h3 className="text-2xl font-semibold text-navy">
+                <p className="text-xs font-semibold text-teal tracking-[0.2em] uppercase mb-4">Multi-language</p>
+                <h3 className="text-3xl font-bold text-charcoal tracking-tight leading-tight">
                   Multiple languages supported
                 </h3>
               </div>
-              <div className="w-10 h-10 rounded-lg bg-teal-soft flex items-center justify-center">
-                <svg className="w-5 h-5 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-14 h-14 rounded-sm bg-teal-soft flex items-center justify-center border border-teal/20">
+                <svg className="w-7 h-7 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
                 </svg>
               </div>
             </div>
-            <p className="text-base text-gray-500 mb-6">
+            <p className="text-lg text-gray-700 mb-8 leading-relaxed font-light relative z-10">
               Names transliterated six different ways? No problem. All variations linked as aliases on a single entity.
             </p>
             
             {/* Language cards */}
-            <div className="flex-1 flex items-center justify-center gap-3">
-              <div className="bg-gray-50 rounded-lg p-3 border border-gray-100 animate-language-fade-1">
-                <p className="text-lg font-semibold text-navy mb-0.5">Волков</p>
-                <p className="text-[10px] text-gray-400">Russian</p>
+            <div className="flex-1 flex items-center justify-center gap-5 relative z-10">
+              <div className="bg-bg-cream rounded-sm p-6 border border-gray-200 hover:border-teal/30 transition-colors">
+                <p className="text-xl font-bold text-charcoal mb-1.5 tracking-tight">Волков</p>
+                <p className="text-xs text-gray-600 font-medium">Russian</p>
               </div>
-              <span className="text-gray-300 animate-language-link">=</span>
-              <div className="bg-gray-50 rounded-lg p-3 border border-gray-100 animate-language-fade-2">
-                <p className="text-lg font-semibold text-navy mb-0.5">Volkov</p>
-                <p className="text-[10px] text-gray-400">English</p>
+              <span className="text-gray-400 text-2xl animate-language-link font-light">=</span>
+              <div className="bg-bg-cream rounded-sm p-6 border border-gray-200 hover:border-teal/30 transition-colors">
+                <p className="text-xl font-bold text-charcoal mb-1.5 tracking-tight">Volkov</p>
+                <p className="text-xs text-gray-600 font-medium">English</p>
               </div>
-              <span className="text-gray-300 animate-language-link" style={{ animationDelay: '1.2s' }}>=</span>
-              <div className="bg-gray-50 rounded-lg p-3 border border-gray-100 animate-language-fade-3">
-                <p className="text-lg font-semibold text-navy mb-0.5">Volkoff</p>
-                <p className="text-[10px] text-gray-400">French</p>
+              <span className="text-gray-400 text-2xl animate-language-link font-light" style={{ animationDelay: '1.2s' }}>=</span>
+              <div className="bg-bg-cream rounded-sm p-6 border border-gray-200 hover:border-teal/30 transition-colors">
+                <p className="text-xl font-bold text-charcoal mb-1.5 tracking-tight">Volkoff</p>
+                <p className="text-xs text-gray-600 font-medium">French</p>
               </div>
             </div>
           </div>
@@ -502,18 +554,18 @@ function BentoFeatures() {
           <div className="flex flex-col gap-4">
             <EntityDiscoveryBento />
 
-            <div className="bg-white rounded-lg p-6 flex-1 border border-gray-200">
-              <div className="flex items-start gap-3 mb-3">
-                <div className="w-10 h-10 rounded-lg bg-teal-soft flex items-center justify-center flex-shrink-0">
-                  <svg className="w-5 h-5 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-white rounded-2xl p-8 flex-1 border border-gray-100 card-hover">
+              <div className="flex items-start gap-4 mb-4">
+                <div className="w-14 h-14 rounded-sm bg-teal-soft flex items-center justify-center flex-shrink-0 border border-teal/20">
+                  <svg className="w-7 h-7 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-navy mb-1">
+                  <h3 className="text-2xl font-bold text-charcoal mb-2 tracking-tight">
                     Knowledge that persists
                   </h3>
-                  <p className="text-base text-gray-500">
+                  <p className="text-lg text-gray-700 leading-relaxed font-light">
                     When someone leaves, their research stays. When a name appears in a new leak, you&apos;ll know it was relevant years ago.
                   </p>
                 </div>
@@ -553,36 +605,39 @@ function BeforeAfter() {
   ];
 
   return (
-    <section className="bg-white py-20 border-t border-gray-100">
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="text-center mb-12">
-          <p className="text-xs font-semibold text-teal tracking-wider uppercase mb-4">What Changes</p>
-          <h2 className="text-3xl md:text-4xl font-bold text-navy leading-tight">
+    <section className="bg-bg-paper py-40 px-8 relative">
+      <div className="max-w-6xl mx-auto">
+        <div className="mb-24">
+          <div className="flex items-center gap-4 mb-6">
+            <div className="h-px w-16 bg-teal"></div>
+            <p className="text-xs font-semibold text-teal tracking-[0.2em] uppercase">What Changes</p>
+          </div>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-charcoal leading-[1.1] tracking-tight max-w-3xl">
             Before vs. After
           </h2>
         </div>
 
-        <div className="space-y-3">
-          <div className="grid md:grid-cols-2 gap-3 text-sm font-medium text-gray-500 px-4">
+        <div className="space-y-5">
+          <div className="grid md:grid-cols-2 gap-8 text-sm font-semibold text-gray-600 px-2 mb-4 border-b border-gray-200 pb-4">
             <div>Before</div>
             <div>After</div>
           </div>
           {comparisons.map((item, index) => (
-            <div key={index} className="grid md:grid-cols-2 gap-3">
-              <div className="bg-coral-soft rounded-lg p-4 flex items-center border border-red-100">
-                <div className="flex items-start gap-3">
-                  <svg className="w-4 h-4 text-coral flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div key={index} className="grid md:grid-cols-2 gap-8">
+              <div className="bg-bg-cream rounded-sm p-7 flex items-center border-l-4 border-red-300 transition-colors">
+                <div className="flex items-start gap-4">
+                  <svg className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
-                  <p className="text-sm text-gray-600">{item.before}</p>
+                  <p className="text-base text-gray-700 leading-relaxed font-light">{item.before}</p>
                 </div>
               </div>
-              <div className="bg-teal-pale rounded-lg p-4 flex items-center border border-teal/20">
-                <div className="flex items-start gap-3">
-                  <svg className="w-4 h-4 text-teal flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="bg-bg-cream rounded-sm p-7 flex items-center border-l-4 border-teal transition-colors">
+                <div className="flex items-start gap-4">
+                  <svg className="w-5 h-5 text-teal flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
-                  <p className="text-sm text-navy font-medium">{item.after}</p>
+                  <p className="text-base text-charcoal font-semibold leading-relaxed">{item.after}</p>
                 </div>
               </div>
             </div>
@@ -639,29 +694,32 @@ function HowItWorks() {
   ];
 
   return (
-    <section className="bg-bg-light py-20">
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="text-center mb-12">
-          <p className="text-xs font-semibold text-teal tracking-wider uppercase mb-4">How It Works</p>
-          <h2 className="text-3xl md:text-4xl font-bold text-navy leading-tight">
+    <section className="bg-bg-cream py-40 px-8 relative">
+      <div className="max-w-6xl mx-auto">
+        <div className="mb-20">
+          <div className="flex items-center gap-4 mb-6">
+            <div className="h-px w-16 bg-teal"></div>
+            <p className="text-xs font-semibold text-teal tracking-[0.2em] uppercase">How It Works</p>
+          </div>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-charcoal leading-[1.1] tracking-tight max-w-3xl">
             From document to intelligence
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-4 gap-10">
           {steps.map((step, index) => (
             <div key={index} className="relative">
               {index < steps.length - 1 && (
-                <div className="hidden md:block absolute top-10 left-[60%] w-[80%] h-px bg-gray-200"></div>
+                <div className="hidden md:block absolute top-12 left-[65%] w-[70%] h-px bg-gray-300"></div>
               )}
               
               <div className="relative z-10 flex flex-col items-center text-center">
-                <div className="w-20 h-20 rounded-lg bg-white border border-gray-200 flex items-center justify-center mb-4 text-teal">
+                <div className="w-24 h-24 rounded-sm bg-bg-paper border-2 border-teal/30 flex items-center justify-center mb-6 text-teal">
                   {step.icon}
                 </div>
-                <span className="text-xs font-mono text-teal font-semibold mb-2">{step.number}</span>
-                <h3 className="text-lg font-semibold text-navy mb-2">{step.title}</h3>
-                <p className="text-sm text-gray-500">{step.description}</p>
+                <span className="text-xs font-mono text-teal font-semibold mb-3 tracking-wider">{step.number}</span>
+                <h3 className="text-xl font-bold text-charcoal mb-3 tracking-tight">{step.title}</h3>
+                <p className="text-base text-gray-700 leading-relaxed font-light">{step.description}</p>
               </div>
             </div>
           ))}
@@ -671,79 +729,108 @@ function HowItWorks() {
   );
 }
 
+// Minimal frame component for screenshot display
+function ScreenFrame({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="rounded-sm overflow-hidden border border-gray-200 bg-gray-100">
+      {/* Minimal top bar - just a subtle hint */}
+      <div className="flex items-center gap-1.5 px-3 py-2 bg-gray-100 border-b border-gray-200">
+        <div className="w-2 h-2 rounded-full bg-gray-300"></div>
+        <div className="w-2 h-2 rounded-full bg-gray-300"></div>
+        <div className="w-2 h-2 rounded-full bg-gray-300"></div>
+      </div>
+      {/* Screenshot content */}
+      <div className="relative">
+        {children}
+      </div>
+    </div>
+  );
+}
+
 // Application Screenshots Section
 function ApplicationScreenshots() {
   return (
-    <section className="bg-white py-20 border-t border-gray-100">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-12">
-          <p className="text-xs font-semibold text-teal tracking-wider uppercase mb-4">See It In Action</p>
-          <h2 className="text-3xl md:text-4xl font-bold text-navy leading-tight mb-4">
+    <section className="bg-bg-paper py-40 px-8 relative overflow-hidden">
+      {/* Atmospheric background */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-teal/3 rounded-full blur-3xl"></div>
+      
+      <div className="max-w-6xl mx-auto relative z-10">
+        {/* Header */}
+        <div className="mb-24 max-w-2xl">
+          <div className="flex items-center gap-4 mb-6">
+            <div className="h-px w-16 bg-teal"></div>
+            <p className="text-xs font-semibold text-teal tracking-[0.2em] uppercase">See It In Action</p>
+          </div>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-charcoal leading-[1.1] mb-6 tracking-tight">
             The platform in action
           </h2>
-          <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-            Real screenshots from the application showing document analysis, entity extraction, and connection mapping.
+          <p className="text-xl text-gray-700 font-light leading-relaxed">
+            A seamless workflow from document upload to connection mapping.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          {/* Document Scanning */}
-          <div className="relative group">
-            <div className="relative overflow-hidden rounded-lg border border-gray-200 shadow-sm">
-              <div className="relative aspect-[4/3]">
-                <Image
-                  src="/doc-scan.jpg"
-                  alt="Document scanning interface"
-                  fill
-                  className="object-cover"
-                />
-                {/* Gradient fade overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent pointer-events-none"></div>
-              </div>
+        {/* Hero Screenshot - Full Width */}
+        <div className="mb-16 relative">
+          <div className="absolute -top-4 -left-4 text-8xl font-bold text-teal/10 select-none">01</div>
+          <ScreenFrame>
+            <div className="relative aspect-[16/10] bg-gray-50">
+              <Image
+                src="/doc-scan.jpg"
+                alt="Document scanning interface"
+                fill
+                className="object-contain"
+              />
             </div>
-            <div className="mt-4">
-              <h3 className="text-lg font-semibold text-navy mb-1">Document Upload & Scanning</h3>
-              <p className="text-sm text-gray-500">Upload documents and watch as the AI extracts entities in real-time.</p>
-            </div>
+          </ScreenFrame>
+          <div className="mt-8 max-w-xl">
+            <h3 className="text-2xl font-bold text-charcoal mb-3 tracking-tight">Upload & Analyze</h3>
+            <p className="text-lg text-gray-700 leading-relaxed font-light">
+              Drop any document — PDFs, scanned images, court filings. The AI extracts entities automatically.
+            </p>
           </div>
+        </div>
 
-          {/* Analyzed Document */}
-          <div className="relative group">
-            <div className="relative overflow-hidden rounded-lg border border-gray-200 shadow-sm">
-              <div className="relative aspect-[4/3]">
+        {/* Two-column layout for remaining screenshots */}
+        <div className="grid md:grid-cols-2 gap-12">
+          {/* Entity Extraction */}
+          <div className="relative">
+            <div className="absolute -top-4 -left-4 text-8xl font-bold text-teal/10 select-none">02</div>
+            <ScreenFrame>
+              <div className="relative aspect-[16/10] bg-gray-50">
                 <Image
                   src="/analyzed-doc.jpg"
                   alt="Analyzed document with extracted entities"
                   fill
-                  className="object-cover"
+                  className="object-contain"
                 />
-                {/* Gradient fade overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent pointer-events-none"></div>
               </div>
-            </div>
-            <div className="mt-4">
-              <h3 className="text-lg font-semibold text-navy mb-1">Entity Extraction & Analysis</h3>
-              <p className="text-sm text-gray-500">See extracted names, companies, and relationships highlighted and linked.</p>
+            </ScreenFrame>
+            <div className="mt-8">
+              <h3 className="text-xl font-bold text-charcoal mb-3 tracking-tight">Extract Entities</h3>
+              <p className="text-base text-gray-700 leading-relaxed font-light">
+                Names, companies, and relationships are highlighted and linked to your existing research.
+              </p>
             </div>
           </div>
 
           {/* Connection Map */}
-          <div className="relative group">
-            <div className="relative overflow-hidden rounded-lg border border-gray-200 shadow-sm">
-              <div className="relative aspect-[4/3]">
+          <div className="relative">
+            <div className="absolute -top-4 -left-4 text-8xl font-bold text-teal/10 select-none">03</div>
+            <ScreenFrame>
+              <div className="relative aspect-[16/10] bg-gray-50">
                 <Image
                   src="/map-linking.jpg"
                   alt="Connection map showing entity relationships"
                   fill
-                  className="object-cover"
+                  className="object-contain"
                 />
-                {/* Gradient fade overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent pointer-events-none"></div>
               </div>
-            </div>
-            <div className="mt-4">
-              <h3 className="text-lg font-semibold text-navy mb-1">Connection Mapping</h3>
-              <p className="text-sm text-gray-500">Automatically visualize relationships and connections between entities in a network graph.</p>
+            </ScreenFrame>
+            <div className="mt-8">
+              <h3 className="text-xl font-bold text-charcoal mb-3 tracking-tight">Map Connections</h3>
+              <p className="text-base text-gray-700 leading-relaxed font-light">
+                Visualize the network of relationships between entities across all your investigations.
+              </p>
             </div>
           </div>
         </div>
@@ -755,36 +842,65 @@ function ApplicationScreenshots() {
 // Footer
 function Footer() {
   return (
-    <footer className="bg-gray-800 py-16">
-      <div className="max-w-4xl mx-auto px-6 text-center">
-        <p className="text-base text-white/50 mb-12 max-w-xl mx-auto">
-          AI-powered document intelligence for human rights organizations and investigative journalists.
-        </p>
-        
-        {/* Partner Logos */}
-        <div className="bg-white/5 rounded-lg p-8 mb-8">
-          <div className="flex items-center justify-center gap-12">
-            <Image
-              src="/hrf-logo.svg"
-              alt="Human Rights Foundation"
-              width={200}
-              height={80}
-              className="h-16 w-auto"
-            />
-            <Image
-              src="/ai-rights-logo.svg"
-              alt="AI Rights"
-              width={200}
-              height={80}
-              className="h-16 w-auto"
-            />
+    <footer className="bg-bg-cream py-40 px-8 relative overflow-hidden">
+      {/* Atmospheric background */}
+      <div className="absolute top-0 left-0 w-96 h-96 bg-teal/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-amber/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+      
+      <div className="max-w-6xl mx-auto relative z-10">
+        {/* Asymmetric layout matching the rest of the site */}
+        <div className="grid md:grid-cols-12 gap-12 items-start mb-20">
+          {/* Left column - description */}
+          <div className="md:col-span-7">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="h-px w-16 bg-teal"></div>
+              <p className="text-xs font-semibold text-teal tracking-[0.2em] uppercase">Corruption Disrespector</p>
+            </div>
+            <p className="text-xl text-gray-700 max-w-2xl leading-relaxed font-light mb-8">
+              AI-powered document intelligence for human rights organizations and investigative journalists.
+            </p>
+            <p className="text-base text-gray-600 leading-relaxed font-light italic">
+              Expose corruption. Follow the money.
+            </p>
           </div>
-        </div>
-        
-        <div className="border-t border-white/10 pt-8">
-          <p className="text-sm text-white/30">
-            Expose corruption. Follow the money.
-          </p>
+
+          {/* Right column - partner logos */}
+          <div className="md:col-span-5">
+            <p className="text-xs font-semibold text-teal tracking-[0.2em] uppercase mb-6">Partners</p>
+            <div className="flex flex-col gap-4">
+              {/* HRF Logo - light background */}
+              <a
+                href="https://hrf.org/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-bg-paper rounded-sm p-6 border border-gray-200 flex items-center justify-center hover:border-teal/30 transition-colors"
+              >
+                <Image
+                  src="/hrf-logo.svg"
+                  alt="Human Rights Foundation"
+                  width={200}
+                  height={80}
+                  className="h-14 w-auto opacity-90 hover:opacity-100 transition-all duration-300"
+                />
+              </a>
+              {/* AI Rights Logo - dark teal background */}
+              <a
+                href="https://hrf.org/program/ai-for-individual-rights/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-sm p-8 border border-teal-dark flex items-center justify-center hover:border-teal-light transition-colors"
+                style={{ backgroundColor: '#0f766e' }}
+              >
+                <Image
+                  src="/ai-rights-logo.svg"
+                  alt="AI Rights"
+                  width={200}
+                  height={80}
+                  className="h-20 w-auto opacity-95 hover:opacity-100 transition-all duration-300"
+                />
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
@@ -799,8 +915,6 @@ export default function Home() {
       <Hero />
       <ProblemStatement />
       <BentoFeatures />
-      <BeforeAfter />
-      <HowItWorks />
       <ApplicationScreenshots />
       <Footer />
     </main>
