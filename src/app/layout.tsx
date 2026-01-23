@@ -60,11 +60,20 @@ export const metadata: Metadata = {
     description: "Upload documents, extract entities, map connections, and expose corruption. Built for human rights activists and investigative journalists.",
     type: "website",
     siteName: "ACF Document Scanner",
+    images: [
+      {
+        url: "/open-graph.jpg",
+        width: 1200,
+        height: 630,
+        alt: "ACF Document Scanner - AI-Powered Corruption Investigation",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "ACF Document Scanner - AI-Powered Corruption Investigation",
     description: "Upload documents, extract entities, map connections, and expose corruption.",
+    images: ["/open-graph.jpg"],
   },
 };
 
