@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, memo } from "react";
 import Image from "next/image";
 
 // Notification data pool - document processing notifications
@@ -20,8 +20,27 @@ interface StackNotification {
   position: number;
 }
 
-// Animated Entity Discovery Bento Component
-function EntityDiscoveryBento() {
+// Pure function - hoisted outside component for better performance
+function getStackStyles(position: number) {
+  const stackConfigs: Record<number, { y: string; scale: number; opacity: number; zIndex: number }> = {
+    [-1]: { y: 'calc(-50% + 60px)', scale: 1, opacity: 0, zIndex: 4 },
+    0: { y: '-50%', scale: 1, opacity: 1, zIndex: 3 },
+    1: { y: 'calc(-50% - 12px)', scale: 0.96, opacity: 0.85, zIndex: 2 },
+    2: { y: 'calc(-50% - 24px)', scale: 0.92, opacity: 0.7, zIndex: 1 },
+    3: { y: 'calc(-50% - 50px)', scale: 0.88, opacity: 0, zIndex: 0 },
+  };
+
+  const config = stackConfigs[position] || stackConfigs[3];
+  
+  return {
+    transform: `translateY(${config.y}) scale(${config.scale})`,
+    opacity: config.opacity,
+    zIndex: config.zIndex,
+  };
+}
+
+// Animated Entity Discovery Bento Component - memoized for performance
+const EntityDiscoveryBento = memo(function EntityDiscoveryBento() {
   const [notifications, setNotifications] = useState<StackNotification[]>([]);
   const [isInView, setIsInView] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -88,6 +107,7 @@ function EntityDiscoveryBento() {
           position: -1,
         });
 
+        // Use functional setState to avoid stale closure
         setTimeout(() => {
           setNotifications(current => 
             current.map(n => n.position === -1 ? { ...n, position: 0 } : n)
@@ -101,35 +121,28 @@ function EntityDiscoveryBento() {
     return () => clearInterval(cycleInterval);
   }, [isInView, notifications.length]);
 
-  const getStackStyles = (position: number) => {
-    const stackConfigs: Record<number, { y: string; scale: number; opacity: number; zIndex: number }> = {
-      [-1]: { y: 'calc(-50% + 60px)', scale: 1, opacity: 0, zIndex: 4 },
-      0: { y: '-50%', scale: 1, opacity: 1, zIndex: 3 },
-      1: { y: 'calc(-50% - 12px)', scale: 0.96, opacity: 0.85, zIndex: 2 },
-      2: { y: 'calc(-50% - 24px)', scale: 0.92, opacity: 0.7, zIndex: 1 },
-      3: { y: 'calc(-50% - 50px)', scale: 0.88, opacity: 0, zIndex: 0 },
-    };
-
-    const config = stackConfigs[position] || stackConfigs[3];
-    
-    return {
-      transform: `translateY(${config.y}) scale(${config.scale})`,
-      opacity: config.opacity,
-      zIndex: config.zIndex,
-    };
-  };
-
   return (
-    <div ref={containerRef} className="bg-teal-pale rounded-sm p-10 flex-1 min-h-[320px] flex flex-col relative overflow-hidden border border-gray-200 card-hover editorial-accent">
-      <h3 className="text-2xl font-bold text-charcoal mb-3 text-center tracking-tight">
-        Real-time Entity Extraction
-      </h3>
-      <p className="text-base text-gray-700 mb-6 text-center font-light leading-relaxed">
+    <div ref={containerRef} className="bg-teal-pale rounded-sm p-6 md:p-10 pb-8 md:pb-10 flex-1 min-h-[480px] md:min-h-[400px] flex flex-col relative overflow-hidden border border-gray-200 card-hover editorial-accent">
+      <div className="absolute top-0 right-0 w-32 h-32 bg-teal/5 rounded-full blur-2xl"></div>
+      <div className="flex items-start justify-between mb-4 md:mb-6 relative z-10">
+        <div>
+          <p className="text-xs font-semibold text-teal tracking-[0.2em] uppercase mb-3 md:mb-4">Real-time Extraction</p>
+          <h3 className="text-2xl md:text-3xl font-normal text-charcoal tracking-tight leading-tight">
+            Entity Discovery
+          </h3>
+        </div>
+        <div className="w-12 h-12 md:w-14 md:h-14 rounded-sm bg-teal-soft flex items-center justify-center border border-teal/20 flex-shrink-0">
+          <svg className="w-6 h-6 md:w-7 md:h-7 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+      </div>
+      <p className="text-base md:text-lg text-gray-700 mb-4 md:mb-6 leading-relaxed font-light relative z-10">
         Upload a document. Watch as names, companies, addresses, and amounts are automatically identified.
       </p>
       
-      <div className="flex-1 flex items-center justify-center">
-        <div className="relative w-full max-w-[380px] h-[140px]">
+      <div className="flex-1 flex items-center justify-center relative z-10 min-h-[180px] md:min-h-[160px] pb-4 md:pb-0">
+        <div className="relative w-full max-w-[380px] h-[140px] overflow-visible">
           {notifications.map((notification) => (
             <div
               key={notification.id}
@@ -154,15 +167,23 @@ function EntityDiscoveryBento() {
       </div>
     </div>
   );
-}
+});
 
-// Navigation
-function Navigation() {
+// Navigation - memoized to prevent unnecessary re-renders
+const Navigation = memo(function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
+    // Use functional setState for stable callback
+    const handleScroll = () => {
+      setIsScrolled(prev => {
+        const scrolled = window.scrollY > 20;
+        return prev !== scrolled ? scrolled : prev;
+      });
+    };
+    
+    // Use passive listener for better scroll performance
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -177,7 +198,7 @@ function Navigation() {
       </div>
     </nav>
   );
-}
+});
 
 // Hero Section with Video Background
 function Hero() {
@@ -213,7 +234,7 @@ function Hero() {
             </div>
 
             {/* Main Headline - Editorial serif */}
-            <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-charcoal leading-[1.05] mb-8 tracking-tight">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-normal text-charcoal leading-[1.05] mb-8 tracking-tight">
               Every document.<br />
               Every connection.<br />
               <span className="italic">Never forgotten.</span>
@@ -262,7 +283,7 @@ function ProblemStatement() {
 
           {/* Right column - content */}
           <div className="md:col-span-9">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-charcoal leading-[1.1] mb-10 tracking-tight">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-normal text-charcoal leading-[1.1] mb-10 tracking-tight">
               Corruption hides in complexity
             </h2>
             
@@ -305,7 +326,7 @@ function BentoFeatures() {
             <div className="h-px w-16 bg-teal"></div>
             <p className="text-xs font-semibold text-teal tracking-[0.2em] uppercase">The Solution</p>
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-charcoal leading-[1.1] mb-6 tracking-tight max-w-4xl">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-normal text-charcoal leading-[1.1] mb-6 tracking-tight max-w-4xl">
             One system for all your research
           </h2>
           <p className="text-xl text-gray-700 max-w-3xl font-light leading-relaxed">
@@ -321,7 +342,7 @@ function BentoFeatures() {
             <div className="flex items-start justify-between mb-6 relative z-10">
               <div>
                 <p className="text-xs font-semibold text-teal tracking-[0.2em] uppercase mb-4">Upload & Analyze</p>
-                <h3 className="text-3xl font-bold text-charcoal tracking-tight leading-tight">
+                <h3 className="text-3xl font-normal text-charcoal tracking-tight leading-tight">
                   Drop any document
                 </h3>
               </div>
@@ -362,12 +383,12 @@ function BentoFeatures() {
           </div>
 
           {/* Connection Mapping */}
-          <div className="bg-bg-paper rounded-sm p-10 flex flex-col border border-gray-200 card-hover relative overflow-hidden editorial-accent">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-amber/5 rounded-full blur-2xl"></div>
+          <div className="bg-teal-pale rounded-sm p-10 flex flex-col border border-gray-200 card-hover relative overflow-hidden editorial-accent">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-teal/5 rounded-full blur-2xl"></div>
             <div className="flex items-start justify-between mb-6 relative z-10">
               <div>
                 <p className="text-xs font-semibold text-teal tracking-[0.2em] uppercase mb-4">Connection Mapping</p>
-                <h3 className="text-3xl font-bold text-charcoal tracking-tight leading-tight">
+                <h3 className="text-3xl font-normal text-charcoal tracking-tight leading-tight">
                   Visualize networks
                 </h3>
               </div>
@@ -517,7 +538,7 @@ function BentoFeatures() {
             <div className="flex items-start justify-between mb-6 relative z-10">
               <div>
                 <p className="text-xs font-semibold text-teal tracking-[0.2em] uppercase mb-4">Multi-language</p>
-                <h3 className="text-3xl font-bold text-charcoal tracking-tight leading-tight">
+                <h3 className="text-3xl font-normal text-charcoal tracking-tight leading-tight">
                   Multiple languages supported
                 </h3>
               </div>
@@ -532,20 +553,22 @@ function BentoFeatures() {
             </p>
             
             {/* Language cards */}
-            <div className="flex-1 flex items-center justify-center gap-5 relative z-10">
-              <div className="bg-bg-cream rounded-sm p-6 border border-gray-200 hover:border-teal/30 transition-colors">
-                <p className="text-xl font-bold text-charcoal mb-1.5 tracking-tight">Волков</p>
-                <p className="text-xs text-gray-600 font-medium">Russian</p>
-              </div>
-              <span className="text-gray-400 text-2xl animate-language-link font-light">=</span>
-              <div className="bg-bg-cream rounded-sm p-6 border border-gray-200 hover:border-teal/30 transition-colors">
-                <p className="text-xl font-bold text-charcoal mb-1.5 tracking-tight">Volkov</p>
-                <p className="text-xs text-gray-600 font-medium">English</p>
-              </div>
-              <span className="text-gray-400 text-2xl animate-language-link font-light" style={{ animationDelay: '1.2s' }}>=</span>
-              <div className="bg-bg-cream rounded-sm p-6 border border-gray-200 hover:border-teal/30 transition-colors">
-                <p className="text-xl font-bold text-charcoal mb-1.5 tracking-tight">Volkoff</p>
-                <p className="text-xs text-gray-600 font-medium">French</p>
+            <div className="flex-1 flex items-center justify-center gap-3 md:gap-5 relative z-10 overflow-x-auto pb-2 -mx-2 px-2">
+              <div className="flex items-center gap-3 md:gap-5 flex-shrink-0">
+                <div className="bg-bg-cream rounded-sm p-4 md:p-6 border border-gray-200 hover:border-teal/30 transition-colors flex-shrink-0">
+                  <p className="text-lg md:text-xl font-normal text-charcoal mb-1.5 tracking-tight">Волков</p>
+                  <p className="text-xs text-gray-600 font-medium">Russian</p>
+                </div>
+                <span className="text-gray-400 text-xl md:text-2xl animate-language-link font-light flex-shrink-0">=</span>
+                <div className="bg-bg-cream rounded-sm p-4 md:p-6 border border-gray-200 hover:border-teal/30 transition-colors flex-shrink-0">
+                  <p className="text-lg md:text-xl font-normal text-charcoal mb-1.5 tracking-tight">Volkov</p>
+                  <p className="text-xs text-gray-600 font-medium">English</p>
+                </div>
+                <span className="text-gray-400 text-xl md:text-2xl animate-language-link font-light flex-shrink-0" style={{ animationDelay: '1.2s' }}>=</span>
+                <div className="bg-bg-cream rounded-sm p-4 md:p-6 border border-gray-200 hover:border-teal/30 transition-colors flex-shrink-0">
+                  <p className="text-lg md:text-xl font-normal text-charcoal mb-1.5 tracking-tight">Volkoff</p>
+                  <p className="text-xs text-gray-600 font-medium">French</p>
+                </div>
               </div>
             </div>
           </div>
@@ -554,22 +577,24 @@ function BentoFeatures() {
           <div className="flex flex-col gap-4">
             <EntityDiscoveryBento />
 
-            <div className="bg-white rounded-2xl p-8 flex-1 border border-gray-100 card-hover">
-              <div className="flex items-start gap-4 mb-4">
-                <div className="w-14 h-14 rounded-sm bg-teal-soft flex items-center justify-center flex-shrink-0 border border-teal/20">
+            <div className="bg-bg-paper rounded-sm p-10 flex-1 border border-gray-200 card-hover relative overflow-hidden editorial-accent">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-amber/5 rounded-full blur-2xl"></div>
+              <div className="flex items-start justify-between mb-6 relative z-10">
+                <div>
+                  <p className="text-xs font-semibold text-teal tracking-[0.2em] uppercase mb-4">Knowledge Persistence</p>
+                  <h3 className="text-3xl font-normal text-charcoal tracking-tight leading-tight">
+                    Knowledge that persists
+                  </h3>
+                </div>
+                <div className="w-14 h-14 rounded-sm bg-teal-soft flex items-center justify-center border border-teal/20">
                   <svg className="w-7 h-7 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-charcoal mb-2 tracking-tight">
-                    Knowledge that persists
-                  </h3>
-                  <p className="text-lg text-gray-700 leading-relaxed font-light">
-                    When someone leaves, their research stays. When a name appears in a new leak, you&apos;ll know it was relevant years ago.
-                  </p>
-                </div>
               </div>
+              <p className="text-lg text-gray-700 leading-relaxed font-light relative z-10">
+                When someone leaves, their research stays. When a name appears in a new leak, you&apos;ll know it was relevant years ago.
+              </p>
             </div>
           </div>
 
@@ -612,7 +637,7 @@ function BeforeAfter() {
             <div className="h-px w-16 bg-teal"></div>
             <p className="text-xs font-semibold text-teal tracking-[0.2em] uppercase">What Changes</p>
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-charcoal leading-[1.1] tracking-tight max-w-3xl">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-normal text-charcoal leading-[1.1] tracking-tight max-w-3xl">
             Before vs. After
           </h2>
         </div>
@@ -701,7 +726,7 @@ function HowItWorks() {
             <div className="h-px w-16 bg-teal"></div>
             <p className="text-xs font-semibold text-teal tracking-[0.2em] uppercase">How It Works</p>
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-charcoal leading-[1.1] tracking-tight max-w-3xl">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-normal text-charcoal leading-[1.1] tracking-tight max-w-3xl">
             From document to intelligence
           </h2>
         </div>
@@ -718,7 +743,7 @@ function HowItWorks() {
                   {step.icon}
                 </div>
                 <span className="text-xs font-mono text-teal font-semibold mb-3 tracking-wider">{step.number}</span>
-                <h3 className="text-xl font-bold text-charcoal mb-3 tracking-tight">{step.title}</h3>
+                <h3 className="text-xl font-normal text-charcoal mb-3 tracking-tight">{step.title}</h3>
                 <p className="text-base text-gray-700 leading-relaxed font-light">{step.description}</p>
               </div>
             </div>
@@ -761,7 +786,7 @@ function ApplicationScreenshots() {
             <div className="h-px w-16 bg-teal"></div>
             <p className="text-xs font-semibold text-teal tracking-[0.2em] uppercase">See It In Action</p>
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-charcoal leading-[1.1] mb-6 tracking-tight">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-normal text-charcoal leading-[1.1] mb-6 tracking-tight">
             The platform in action
           </h2>
           <p className="text-xl text-gray-700 font-light leading-relaxed">
@@ -771,7 +796,7 @@ function ApplicationScreenshots() {
 
         {/* Hero Screenshot - Full Width */}
         <div className="mb-16 relative">
-          <div className="absolute -top-4 -left-4 text-8xl font-bold text-teal/10 select-none">01</div>
+          <div className="absolute -top-4 -left-4 text-8xl font-normal text-teal/10 select-none">01</div>
           <ScreenFrame>
             <div className="relative aspect-[16/10] bg-gray-50">
               <Image
@@ -783,7 +808,7 @@ function ApplicationScreenshots() {
             </div>
           </ScreenFrame>
           <div className="mt-8 max-w-xl">
-            <h3 className="text-2xl font-bold text-charcoal mb-3 tracking-tight">Upload & Analyze</h3>
+            <h3 className="text-2xl font-normal text-charcoal mb-3 tracking-tight">Upload & Analyze</h3>
             <p className="text-lg text-gray-700 leading-relaxed font-light">
               Drop any document — PDFs, scanned images, court filings. The AI extracts entities automatically.
             </p>
@@ -794,7 +819,7 @@ function ApplicationScreenshots() {
         <div className="grid md:grid-cols-2 gap-12">
           {/* Entity Extraction */}
           <div className="relative">
-            <div className="absolute -top-4 -left-4 text-8xl font-bold text-teal/10 select-none">02</div>
+            <div className="absolute -top-4 -left-4 text-8xl font-normal text-teal/10 select-none">02</div>
             <ScreenFrame>
               <div className="relative aspect-[16/10] bg-gray-50">
                 <Image
@@ -806,7 +831,7 @@ function ApplicationScreenshots() {
               </div>
             </ScreenFrame>
             <div className="mt-8">
-              <h3 className="text-xl font-bold text-charcoal mb-3 tracking-tight">Extract Entities</h3>
+              <h3 className="text-xl font-normal text-charcoal mb-3 tracking-tight">Extract Entities</h3>
               <p className="text-base text-gray-700 leading-relaxed font-light">
                 Names, companies, and relationships are highlighted and linked to your existing research.
               </p>
@@ -815,7 +840,7 @@ function ApplicationScreenshots() {
 
           {/* Connection Map */}
           <div className="relative">
-            <div className="absolute -top-4 -left-4 text-8xl font-bold text-teal/10 select-none">03</div>
+            <div className="absolute -top-4 -left-4 text-8xl font-normal text-teal/10 select-none">03</div>
             <ScreenFrame>
               <div className="relative aspect-[16/10] bg-gray-50">
                 <Image
@@ -827,7 +852,7 @@ function ApplicationScreenshots() {
               </div>
             </ScreenFrame>
             <div className="mt-8">
-              <h3 className="text-xl font-bold text-charcoal mb-3 tracking-tight">Map Connections</h3>
+              <h3 className="text-xl font-normal text-charcoal mb-3 tracking-tight">Map Connections</h3>
               <p className="text-base text-gray-700 leading-relaxed font-light">
                 Visualize the network of relationships between entities across all your investigations.
               </p>

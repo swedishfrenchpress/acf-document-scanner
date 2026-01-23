@@ -1,13 +1,44 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Source_Sans_3 } from "next/font/google";
+import localFont from "next/font/local";
+import { Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 
-// Distinctive serif display font for headlines - editorial/journalistic feel
-const playfair = Playfair_Display({
+// PP Editorial New - local font for headlines - editorial/journalistic feel
+const ppEditorial = localFont({
+  src: [
+    {
+      path: "../../fonts/PPEditorialNew-Ultralight-BF644b21500d0c0.otf",
+      weight: "200",
+      style: "normal",
+    },
+    {
+      path: "../../fonts/PPEditorialNew-UltralightItalic-BF644b214ff1e9b.otf",
+      weight: "200",
+      style: "italic",
+    },
+    {
+      path: "../../fonts/PPEditorialNew-Regular-BF644b214ff145f.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../fonts/PPEditorialNew-Italic-BF644b214fb0c0a.otf",
+      weight: "400",
+      style: "italic",
+    },
+    {
+      path: "../../fonts/PPEditorialNew-Ultrabold-BF644b21500840c.otf",
+      weight: "800",
+      style: "normal",
+    },
+    {
+      path: "../../fonts/PPEditorialNew-UltraboldItalic-BF644b214faef01.otf",
+      weight: "800",
+      style: "italic",
+    },
+  ],
   variable: "--font-display",
-  subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "600", "700", "800", "900"],
-  style: ["normal", "italic"],
+  display: "swap",
 });
 
 // Refined sans-serif for body text
@@ -44,7 +75,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${playfair.variable} ${sourceSans.variable} antialiased`}>
+      <body className={`${ppEditorial.variable} ${sourceSans.variable} antialiased`}>
         {children}
       </body>
     </html>
